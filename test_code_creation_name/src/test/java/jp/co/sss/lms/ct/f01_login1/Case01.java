@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Duration;
 
@@ -46,6 +47,8 @@ public class Case01 {
 	void test01() {
 
 		WebDriverUtils.goTo("http://localhost:" + port + "/lms");
+
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "ログイン | LMS");
 
 		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("form-group")));

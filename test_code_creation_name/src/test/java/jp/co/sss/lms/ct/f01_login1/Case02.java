@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Duration;
 
@@ -48,6 +49,8 @@ public class Case02 {
 
 		WebDriverUtils.goTo("http://localhost:" + port + "/lms");
 
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "ログイン | LMS");
+
 		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("form-group")));
 
@@ -75,6 +78,11 @@ public class Case02 {
 		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("form-group")));
 
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "ログイン | LMS");
+
+		final WebElement total = WebDriverUtils.webDriver.findElement(By.cssSelector("span.help-inline.error"));
+		assertEquals(total.getText(), "* ログインに失敗しました。");
+
 		WebDriverUtils.getEvidence(new Object() {
 		});
 	}
@@ -99,6 +107,12 @@ public class Case02 {
 		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("form-group")));
 
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "ログイン | LMS");
+
+		final WebElement total = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("#loginId + span.help-inline.error"));
+		assertEquals(total.getText(), "ログインIDは必須です。");
+
 		WebDriverUtils.getEvidence(new Object() {
 		});
 	}
@@ -118,6 +132,12 @@ public class Case02 {
 
 		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("form-group")));
+
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "ログイン | LMS");
+
+		final WebElement total = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("#password + span.help-inline.error"));
+		assertEquals(total.getText(), "パスワードは必須です。");
 
 		WebDriverUtils.getEvidence(new Object() {
 		});
