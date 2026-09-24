@@ -1,7 +1,8 @@
 package jp.co.sss.lms.ct.f02_faq;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.Duration;
 
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -138,14 +140,53 @@ public class Case05 {
 	@Order(5)
 	@DisplayName("テスト05 キーワード検索で該当キーワードを含む検索結果だけ表示")
 	void test05() {
-		// TODO ここに追加
+
+		final WebElement serchWord = WebDriverUtils.webDriver.findElement(By.id("form"));
+		serchWord.clear();
+		serchWord.sendKeys("事業所");
+
+		final WebElement serchButton = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("input[value='検索']"));
+		serchButton.click();
+
+		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(
+				By.className("odd")));
+
+		final WebElement target = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("dt Span.text-primary.mr10+span"));
+
+		String title = target.getText();
+		assertTrue(title.contains("事業所"));
+
+		((JavascriptExecutor) WebDriverUtils.webDriver)
+				.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
+		//		JavascriptExecutor js = (JavascriptExecutor) WebDriverUtils.webDriver;
+		//		js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
+
 	}
 
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 「クリア」ボタン押下で入力したキーワードを消去")
 	void test06() {
-		// TODO ここに追加
+
+		((JavascriptExecutor) WebDriverUtils.webDriver)
+				.executeScript("window.scrollTo(0,0);");
+
+		final WebElement clearButton = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("input[value='クリア']"));
+		clearButton.click();
+
+		final WebElement target = WebDriverUtils.webDriver
+				.findElement(By.id("form"));
+		String serchWord = target.getText();
+
+		assertEquals(serchWord, "");
 	}
 
 }
