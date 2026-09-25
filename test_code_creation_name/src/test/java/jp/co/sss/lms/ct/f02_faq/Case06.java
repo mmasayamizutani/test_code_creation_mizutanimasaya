@@ -4,6 +4,8 @@ import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -142,13 +145,57 @@ public class Case06 {
 				.findElement(By.linkText("【研修関係】"));
 		faqLink.click();
 
+		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(15));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("tbody span.text-primary.mr10")));
+
+		final List<WebElement> targets = WebDriverUtils.webDriver
+				.findElements(By.cssSelector("dt Span.text-primary.mr10+span"));
+
+		List<String> faqTitles = new ArrayList<String>();
+		;
+
+		for (WebElement target : targets) {
+
+			String faqTitle = target.getText();
+			faqTitles.add(faqTitle);
+
+		}
+
+		assertTrue(faqTitles.contains("キャンセル料・途中退校について"));
+		assertTrue(faqTitles.contains("研修の申し込みはどのようにすれば良いですか？"));
+		assertFalse(faqTitles.contains("セルフ・キャリアドック制度とは何か"));
+		assertFalse(faqTitles.contains("事業所が変わった場合、何かしら手続きをする必要がありますか？"));
+		assertFalse(faqTitles.contains("助成金書類の作成方法が分かりません"));
+
+		((JavascriptExecutor) WebDriverUtils.webDriver)
+				.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
+
 	}
 
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 検索結果の質問をクリックしその回答を表示")
 	void test06() {
-		// TODO ここに追加
+		final WebElement faqLink = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("tbody span.text-primary.mr10+span"));
+		faqLink.click();
+
+		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(15));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("tbody span.text-warning.mr10+span")));
+
+		final WebElement target = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("tbody span.text-warning.mr10+span"));
+		String answer = target.getText();
+
+		assertEquals(answer, "受講者の退職や解雇等、やむを得ない事情による途中終了に関してなど、"
+				+ "事情をお伺いした上で、協議という形を取らせて頂きます。 弊社営業担当までご相談下さい。");
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
+
 	}
 
 }
