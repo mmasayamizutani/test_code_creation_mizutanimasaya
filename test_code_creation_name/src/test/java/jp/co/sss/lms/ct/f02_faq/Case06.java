@@ -1,6 +1,9 @@
 package jp.co.sss.lms.ct.f02_faq;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.Duration;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +12,12 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import jp.co.sss.lms.ct.util.WebDriverUtils;
 
 /**
  * 結合テスト よくある質問機能
@@ -18,6 +27,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 @TestMethodOrder(OrderAnnotation.class)
 @DisplayName("ケース06 カテゴリ検索 正常系")
 public class Case06 {
+
+	private int port = 8080;
 
 	/** 前処理 */
 	@BeforeAll
@@ -35,35 +46,102 @@ public class Case06 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+
+		WebDriverUtils.goTo("http://localhost:" + port + "/lms");
+
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "ログイン | LMS");
+
+		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("form-group")));
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		// TODO ここに追加
+
+		final WebElement loginId = WebDriverUtils.webDriver.findElement(By.id("loginId"));
+		loginId.clear();
+		loginId.sendKeys("StudentAA03");
+
+		final WebElement loginPass = WebDriverUtils.webDriver.findElement(By.id("password"));
+		loginPass.clear();
+		loginPass.sendKeys("StudentAA031");
+
+		final WebElement loginButton = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("input[value='ログイン']"));
+		loginButton.click();
+
+		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("contents")));
+
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "コース詳細 | LMS");
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
-		// TODO ここに追加
+
+		final WebElement dropdown = WebDriverUtils.webDriver
+				.findElement(By.className("dropdown"));
+		dropdown.click();
+
+		final WebElement helpLink = WebDriverUtils.webDriver
+				.findElement(By.linkText("ヘルプ"));
+		helpLink.click();
+
+		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("panel-title")));
+
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "ヘルプ | LMS");
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
+
 	}
 
 	@Test
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
-		// TODO ここに追加
+		final WebElement faq = WebDriverUtils.webDriver
+				.findElement(By.linkText("よくある質問"));
+		faq.click();
+
+		String originalWindow = WebDriverUtils.webDriver.getWindowHandle();
+
+		for (String windowHandle : WebDriverUtils.webDriver.getWindowHandles()) {
+			if (!windowHandle.equals(originalWindow)) {
+				WebDriverUtils.webDriver.switchTo().window(windowHandle);
+				break;
+			}
+		}
+
+		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(15));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("container")));
+
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "よくある質問 | LMS");
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
+
 	}
 
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 カテゴリ検索で該当カテゴリの検索結果だけ表示")
 	void test05() {
-		// TODO ここに追加
+		final WebElement faqLink = WebDriverUtils.webDriver
+				.findElement(By.linkText("【研修関係】"));
+		faqLink.click();
+
 	}
 
 	@Test
