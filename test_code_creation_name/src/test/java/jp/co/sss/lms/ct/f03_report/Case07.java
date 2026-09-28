@@ -109,7 +109,7 @@ public class Case07 {
 	void test04() {
 
 		final WebElement reportRegistButton = WebDriverUtils.webDriver
-				.findElement(By.cssSelector("input[value='日報【デモ】を提出する']"));
+				.findElement(By.cssSelector("input.btn.btn-default"));
 		reportRegistButton.click();
 
 		//sectionServiceDailyReportDto
@@ -123,33 +123,31 @@ public class Case07 {
 		});
 
 	}
-	//
-	//	@Test
-	//	@Order(5)
-	//	@DisplayName("テスト05 報告内容を入力して「提出する」ボタンを押下し確認ボタン名が更新される")
-	//	void test05() {
-	//
-	//		final WebElement reportText = WebDriverUtils.webDriver.findElement(By.tagName("textarea"));
-	//		reportText.clear();
-	//		reportText.sendKeys("テスト");
-	//
-	//		final WebElement registCompleteButton = WebDriverUtils.webDriver
-	//				.findElement(By.cssSelector("fieldset button.btn.btn-primary"));
-	//		registCompleteButton.click();
-	//		
-	//		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
-	//		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("table")));
-	//
-	//		final WebElement target = WebDriverUtils.webDriver
-	//				.findElement(By.cssSelector("         "));
-	//		String buttonName = target.getText();
-	//		
-	//		
-	//		assertEquals(buttonName,"提出済み日報【デモ】を確認する");
-	//		
-	//		
-	//		WebDriverUtils.getEvidence(new Object() {
-	//		});
-	//	}
+
+	@Test
+	@Order(5)
+	@DisplayName("テスト05 報告内容を入力して「提出する」ボタンを押下し確認ボタン名が更新される")
+	void test05() {
+
+		final WebElement reportText = WebDriverUtils.webDriver.findElement(By.tagName("textarea"));
+		reportText.clear();
+		reportText.sendKeys("テスト");
+
+		final WebElement registCompleteButton = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("fieldset button.btn.btn-primary"));
+		registCompleteButton.click();
+
+		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("table")));
+
+		final WebElement target = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("input.btn.btn-default"));
+		String buttonName = target.getAttribute("value");
+
+		assertEquals(buttonName, "提出済み日報【デモ】を確認する");
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
+	}
 
 }
