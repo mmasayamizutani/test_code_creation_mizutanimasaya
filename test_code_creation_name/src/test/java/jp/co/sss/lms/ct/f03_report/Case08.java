@@ -195,15 +195,18 @@ public class Case08 {
 
 	}
 
-	//	@Test
-	//	@Order(8)
-	//	@DisplayName("テスト08 レポート詳細画面で修正内容が反映される")
-	//	void test08() {
-	//
-	//		final String newReportText = WebDriverUtils.webDriver
-	//				.findElement(By.xpath("//h3[text='報告レポート']/following-sibling::table[1]//td*[2]")).getText();
-	//
-	//		System.out.println(newReportText);
-	//	}
-	//	//.findElement(By.xpath("//h3[text='報告レポート']/following-sibling::table[1]//td"));
+	@Test
+	@Order(8)
+	@DisplayName("テスト08 レポート詳細画面で修正内容が反映される")
+	void test08() {
+
+		final String newReportText = WebDriverUtils.webDriver
+				.findElement(By.xpath("//h3[text()='報告レポート']/following-sibling::table[1]//tr[2]/td")).getText();
+
+		assertEquals(newReportText, "テスト");
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
+	}
+
 }
