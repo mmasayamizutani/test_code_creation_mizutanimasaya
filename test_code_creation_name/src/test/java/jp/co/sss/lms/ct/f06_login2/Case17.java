@@ -66,11 +66,11 @@ public class Case17 {
 
 		final WebElement loginId = WebDriverUtils.webDriver.findElement(By.id("loginId"));
 		loginId.clear();
-		loginId.sendKeys("StudentAA06");
+		loginId.sendKeys("StudentAA07");
 
 		final WebElement loginPass = WebDriverUtils.webDriver.findElement(By.id("password"));
 		loginPass.clear();
-		loginPass.sendKeys("StudentAA06");
+		loginPass.sendKeys("StudentAA07");
 
 		final WebElement loginButton = WebDriverUtils.webDriver
 				.findElement(By.cssSelector("input[value='ログイン']"));
@@ -79,35 +79,35 @@ public class Case17 {
 		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("fieldset")));
 
-		//		assertEquals(WebDriverUtils.webDriver.getTitle(), "セキュリティ規約 | LMS");
-		//
-		//		WebDriverUtils.getEvidence(new Object() {
-		//		});
-		//	}
-		//
-		//	@Test
-		//	@Order(3)
-		//	@DisplayName("テスト03 「同意します」チェックボックスにチェックを入れ「次へ」ボタン押下")
-		//	void test03() {
-		//
-		//		((JavascriptExecutor) WebDriverUtils.webDriver)
-		//				.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-		//
-		//		final WebElement agreeCheckBox = WebDriverUtils.webDriver
-		//				.findElement(By.cssSelector("input[value='1']"));
-		//		agreeCheckBox.click();
-		//
-		//		final WebElement nextButton = WebDriverUtils.webDriver
-		//				.findElement(By.cssSelector("div button.btn.btn-primary"));
-		//		nextButton.click();
-		//
-		//		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
-		//		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("form-group")));
-		//
-		//		assertEquals(WebDriverUtils.webDriver.getTitle(), "パスワード変更 | LMS");
-		//
-		//		WebDriverUtils.getEvidence(new Object() {
-		//		});
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "セキュリティ規約 | LMS");
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
+	}
+
+	@Test
+	@Order(3)
+	@DisplayName("テスト03 「同意します」チェックボックスにチェックを入れ「次へ」ボタン押下")
+	void test03() {
+
+		((JavascriptExecutor) WebDriverUtils.webDriver)
+				.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
+		final WebElement agreeCheckBox = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("input[value='1']"));
+		agreeCheckBox.click();
+
+		final WebElement nextButton = WebDriverUtils.webDriver
+				.findElement(By.cssSelector("div button.btn.btn-primary"));
+		nextButton.click();
+
+		final WebDriverWait wait = new WebDriverWait(WebDriverUtils.webDriver, Duration.ofSeconds(60));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("form-group")));
+
+		assertEquals(WebDriverUtils.webDriver.getTitle(), "パスワード変更 | LMS");
+
+		WebDriverUtils.getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -118,17 +118,17 @@ public class Case17 {
 		final WebElement oldPass = WebDriverUtils.webDriver
 				.findElement(By.xpath("//label[text()='現在のパスワード']/following-sibling::div//input[1]"));
 		oldPass.clear();
-		oldPass.sendKeys("StudentAA06");
+		oldPass.sendKeys("StudentAA07");
 
 		final WebElement newPass = WebDriverUtils.webDriver
 				.findElement(By.xpath("//label[text()='新しいパスワード']//following-sibling::div//input[1]"));
 		newPass.clear();
-		newPass.sendKeys("StudentAA061");
+		newPass.sendKeys("StudentAA071");
 
 		final WebElement refrainNewPass = WebDriverUtils.webDriver
 				.findElement(By.xpath("//label[text()='確認パスワード']//following-sibling::div//input[1]"));
 		refrainNewPass.clear();
-		refrainNewPass.sendKeys("StudentAA061");
+		refrainNewPass.sendKeys("StudentAA071");
 
 		final WebElement changeButton = WebDriverUtils.webDriver
 				.findElement(By.xpath("//button[text()='変更']"));
